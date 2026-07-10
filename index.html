@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense &amp; Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app-error-banner" role="alert" aria-live="assertive">
+    <span id="app-error-message"></span>
+  </div>
+
+  <main class="app-layout">
+    <header class="app-header">
+      <h1>Expense &amp; Budget Visualizer</h1>
+    </header>
+
+    <!-- Balance & Budget Section -->
+    <section class="balance-budget-section" aria-label="Balance and Budget">
+      <div id="balance-section">
+        <h2>Total Balance</h2>
+        <span id="display-balance">0.00</span>
+      </div>
+
+      <div class="budget-control">
+        <label for="input-budget">Budget Limit</label>
+        <input
+          type="number"
+          id="input-budget"
+          name="input-budget"
+          step="0.01"
+          min="0.01"
+          max="999999999.99"
+          placeholder="Enter budget limit"
+          aria-describedby="budget-error"
+        >
+        <div id="budget-error" role="alert" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Add Transaction Form -->
+    <section class="form-section" aria-label="Add Transaction">
+      <h2>Add Transaction</h2>
+      <form id="form-add" novalidate aria-describedby="form-error">
+        <div class="form-group">
+          <label for="input-name">Item Name</label>
+          <input
+            type="text"
+            id="input-name"
+            name="input-name"
+            maxlength="100"
+            placeholder="Enter item name"
+            autocomplete="off"
+            aria-required="true"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="input-amount">Amount</label>
+          <input
+            type="number"
+            id="input-amount"
+            name="input-amount"
+            step="0.01"
+            min="0.01"
+            max="999999999.99"
+            placeholder="0.00"
+            aria-required="true"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="select-category">Category</label>
+          <select id="select-category" name="select-category" aria-required="true">
+            <option value="">Select category</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Fun">Fun</option>
+          </select>
+        </div>
+
+        <div id="form-error" role="alert" aria-live="polite"></div>
+
+        <button type="submit" id="btn-add">Add Transaction</button>
+      </form>
+    </section>
+
+    <!-- Transaction List Section -->
+    <section class="list-section" aria-label="Transaction List">
+      <div class="list-header">
+        <h2>Transactions</h2>
+        <div class="sort-control">
+          <label for="select-sort">Sort by</label>
+          <select id="select-sort" name="select-sort">
+            <option value="insertion">Date added</option>
+            <option value="amount-asc">Amount: Low to High</option>
+            <option value="amount-desc">Amount: High to Low</option>
+            <option value="category-asc">Category: A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <ul id="transaction-list" aria-label="List of transactions" aria-live="polite">
+        <!-- Transactions rendered by JS -->
+      </ul>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section" aria-label="Spending by Category">
+      <h2>Spending by Category</h2>
+      <canvas id="chart-canvas" role="img" aria-label="Pie chart of spending by category"></canvas>
+      <div id="chart-fallback" aria-live="polite">
+        <!-- Shown when Chart.js CDN fails to load -->
+      </div>
+    </section>
+
+    <!-- Monthly Summary Section -->
+    <section id="monthly-summary" aria-label="Monthly Summary">
+      <h2>Monthly Summary</h2>
+      <div class="monthly-controls">
+        <label for="select-month">Month</label>
+        <select id="select-month" name="select-month">
+          <!-- Options populated by JS -->
+        </select>
+      </div>
+      <ul id="monthly-list" aria-label="Monthly transaction list" aria-live="polite">
+        <!-- Filtered transactions rendered by JS -->
+      </ul>
+      <p class="monthly-total-label">
+        Monthly Total: <strong id="monthly-total">0.00</strong>
+      </p>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
