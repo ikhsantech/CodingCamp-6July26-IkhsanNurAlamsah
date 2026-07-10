@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense &amp; Budget Visualizer</title>
+  <title>Visualisasi Pengeluaran &amp; Anggaran</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,18 +14,18 @@
 
   <main class="app-layout">
     <header class="app-header">
-      <h1>Expense &amp; Budget Visualizer</h1>
+      <h1>Visualisasi Pengeluaran &amp; Anggaran</h1>
     </header>
 
-    <!-- Balance & Budget Section -->
-    <section class="balance-budget-section" aria-label="Balance and Budget">
+    <!-- Bagian Saldo & Anggaran -->
+    <section class="balance-budget-section" aria-label="Saldo dan Anggaran">
       <div id="balance-section">
-        <h2>Total Balance</h2>
+        <h2>Total Saldo</h2>
         <span id="display-balance">0.00</span>
       </div>
 
       <div class="budget-control">
-        <label for="input-budget">Budget Limit</label>
+        <label for="input-budget">Batas Anggaran</label>
         <input
           type="number"
           id="input-budget"
@@ -33,32 +33,32 @@
           step="0.01"
           min="0.01"
           max="999999999.99"
-          placeholder="Enter budget limit"
+          placeholder="Masukkan batas anggaran"
           aria-describedby="budget-error"
         >
         <div id="budget-error" role="alert" aria-live="polite"></div>
       </div>
     </section>
 
-    <!-- Add Transaction Form -->
-    <section class="form-section" aria-label="Add Transaction">
-      <h2>Add Transaction</h2>
+    <!-- Formulir Tambah Transaksi -->
+    <section class="form-section" aria-label="Tambah Transaksi">
+      <h2>Tambah Transaksi</h2>
       <form id="form-add" novalidate aria-describedby="form-error">
         <div class="form-group">
-          <label for="input-name">Item Name</label>
+          <label for="input-name">Nama Item</label>
           <input
             type="text"
             id="input-name"
             name="input-name"
             maxlength="100"
-            placeholder="Enter item name"
+            placeholder="Masukkan nama item"
             autocomplete="off"
             aria-required="true"
           >
         </div>
 
         <div class="form-group">
-          <label for="input-amount">Amount</label>
+          <label for="input-amount">Jumlah</label>
           <input
             type="number"
             id="input-amount"
@@ -72,64 +72,64 @@
         </div>
 
         <div class="form-group">
-          <label for="select-category">Category</label>
+          <label for="select-category">Kategori</label>
           <select id="select-category" name="select-category" aria-required="true">
-            <option value="">Select category</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Fun">Fun</option>
+            <option value="">Pilih kategori</option>
+            <option value="Food">Makanan</option>
+            <option value="Transport">Transportasi</option>
+            <option value="Fun">Hiburan</option>
           </select>
         </div>
 
         <div id="form-error" role="alert" aria-live="polite"></div>
 
-        <button type="submit" id="btn-add">Add Transaction</button>
+        <button type="submit" id="btn-add">Tambah Transaksi</button>
       </form>
     </section>
 
-    <!-- Transaction List Section -->
-    <section class="list-section" aria-label="Transaction List">
+    <!-- Bagian Daftar Transaksi -->
+    <section class="list-section" aria-label="Daftar Transaksi">
       <div class="list-header">
-        <h2>Transactions</h2>
+        <h2>Transaksi</h2>
         <div class="sort-control">
-          <label for="select-sort">Sort by</label>
+          <label for="select-sort">Urutkan berdasarkan</label>
           <select id="select-sort" name="select-sort">
-            <option value="insertion">Date added</option>
-            <option value="amount-asc">Amount: Low to High</option>
-            <option value="amount-desc">Amount: High to Low</option>
-            <option value="category-asc">Category: A–Z</option>
+            <option value="insertion">Tanggal ditambahkan</option>
+            <option value="amount-asc">Jumlah: Terendah ke Tertinggi</option>
+            <option value="amount-desc">Jumlah: Tertinggi ke Terendah</option>
+            <option value="category-asc">Kategori: A–Z</option>
           </select>
         </div>
       </div>
 
-      <ul id="transaction-list" aria-label="List of transactions" aria-live="polite">
-        <!-- Transactions rendered by JS -->
+      <ul id="transaction-list" aria-label="Daftar transaksi" aria-live="polite">
+        <!-- Transaksi ditampilkan oleh JS -->
       </ul>
     </section>
 
-    <!-- Chart Section -->
-    <section class="chart-section" aria-label="Spending by Category">
-      <h2>Spending by Category</h2>
-      <canvas id="chart-canvas" role="img" aria-label="Pie chart of spending by category"></canvas>
+    <!-- Bagian Grafik -->
+    <section class="chart-section" aria-label="Pengeluaran per Kategori">
+      <h2>Pengeluaran per Kategori</h2>
+      <canvas id="chart-canvas" role="img" aria-label="Grafik lingkaran pengeluaran per kategori"></canvas>
       <div id="chart-fallback" aria-live="polite">
-        <!-- Shown when Chart.js CDN fails to load -->
+        <!-- Ditampilkan jika Chart.js CDN gagal dimuat -->
       </div>
     </section>
 
-    <!-- Monthly Summary Section -->
-    <section id="monthly-summary" aria-label="Monthly Summary">
-      <h2>Monthly Summary</h2>
+    <!-- Bagian Ringkasan Bulanan -->
+    <section id="monthly-summary" aria-label="Ringkasan Bulanan">
+      <h2>Ringkasan Bulanan</h2>
       <div class="monthly-controls">
-        <label for="select-month">Month</label>
+        <label for="select-month">Bulan</label>
         <select id="select-month" name="select-month">
-          <!-- Options populated by JS -->
+          <!-- Opsi diisi oleh JS -->
         </select>
       </div>
-      <ul id="monthly-list" aria-label="Monthly transaction list" aria-live="polite">
-        <!-- Filtered transactions rendered by JS -->
+      <ul id="monthly-list" aria-label="Daftar transaksi bulanan" aria-live="polite">
+        <!-- Transaksi yang difilter ditampilkan oleh JS -->
       </ul>
       <p class="monthly-total-label">
-        Monthly Total: <strong id="monthly-total">0.00</strong>
+        Total Bulanan: <strong id="monthly-total">0.00</strong>
       </p>
     </section>
 

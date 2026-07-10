@@ -59,7 +59,7 @@
           JSON.stringify(AppState.transactions)
         );
       } catch (err) {
-        throw new Error("Could not save transactions: " + (err.message || err));
+        throw new Error("Tidak dapat menyimpan transaksi: " + (err.message || err));
       }
     },
 
@@ -74,7 +74,7 @@
           JSON.stringify(AppState.budgetLimit)
         );
       } catch (err) {
-        throw new Error("Could not save budget limit: " + (err.message || err));
+        throw new Error("Tidak dapat menyimpan batas anggaran: " + (err.message || err));
       }
     },
 
@@ -99,7 +99,7 @@
         // localStorage itself is inaccessible (e.g. security restrictions)
         AppState.transactions = [];
         if (typeof showAppError === "function") {
-          showAppError("Could not access saved data. Storage may be unavailable.");
+          showAppError("Tidak dapat mengakses data tersimpan. Penyimpanan mungkin tidak tersedia.");
         }
         rawTransactions = null;
       }
@@ -115,7 +115,7 @@
           // Corrupt JSON (Req 6.5, 1.7)
           AppState.transactions = [];
           if (typeof showAppError === "function") {
-            showAppError("Could not load saved data. Your transaction history has been reset.");
+            showAppError("Tidak dapat memuat data tersimpan. Riwayat transaksi Anda telah direset.");
           }
         }
       }
@@ -181,24 +181,24 @@
     // ── Name validation (Req 1.3) ──────────────────────────────────────────
     const trimmedName = typeof name === "string" ? name.trim() : "";
     if (trimmedName.length === 0) {
-      errors.push("Item Name is required.");
+      errors.push("Nama Item wajib diisi.");
     } else if (trimmedName.length > MAX_NAME_LEN) {
-      errors.push(`Item Name must be ${MAX_NAME_LEN} characters or fewer.`);
+      errors.push(`Nama Item maksimal ${MAX_NAME_LEN} karakter.`);
     }
 
     // ── Amount validation (Req 1.5) ────────────────────────────────────────
     const numericAmount = Number(amount);
     if (amount === "" || amount === null || amount === undefined || isNaN(numericAmount) || !isFinite(numericAmount)) {
-      errors.push("Amount must be between 0.01 and 999,999,999.99.");
+      errors.push("Jumlah harus antara 0,01 dan 999.999.999,99.");
     } else if (numericAmount <= 0) {
-      errors.push("Amount must be between 0.01 and 999,999,999.99.");
+      errors.push("Jumlah harus antara 0,01 dan 999.999.999,99.");
     } else if (numericAmount > MAX_AMOUNT) {
-      errors.push("Amount must be between 0.01 and 999,999,999.99.");
+      errors.push("Jumlah harus antara 0,01 dan 999.999.999,99.");
     }
 
     // ── Category validation (Req 1.4) ──────────────────────────────────────
     if (!CATEGORIES.includes(category)) {
-      errors.push("Category is required.");
+      errors.push("Kategori wajib dipilih.");
     }
 
     return errors;
@@ -217,13 +217,13 @@
     const num = Number(value);
 
     if (value === "" || value === null || value === undefined || isNaN(num) || !isFinite(num)) {
-      return "Budget limit must be a number between 0.01 and 999,999,999.99.";
+      return "Batas anggaran harus berupa angka antara 0,01 dan 999.999.999,99.";
     }
     if (num <= 0) {
-      return "Budget limit must be a number between 0.01 and 999,999,999.99.";
+      return "Batas anggaran harus berupa angka antara 0,01 dan 999.999.999,99.";
     }
     if (num > MAX_AMOUNT) {
-      return "Budget limit must be a number between 0.01 and 999,999,999.99.";
+      return "Batas anggaran harus berupa angka antara 0,01 dan 999.999.999,99.";
     }
 
     return null;
@@ -457,7 +457,7 @@
 
     // 3. Render list
     if (sorted.length === 0) {
-      listEl.innerHTML = "<p>No transactions for this period.</p>";
+      listEl.innerHTML = "<p>Tidak ada transaksi untuk periode ini.</p>";
     } else {
       const items = sorted.map(tx => `
         <li class="transaction-item">
@@ -512,7 +512,7 @@
     var transactions = getSortedTransactions();
 
     if (transactions.length === 0) {
-      listEl.innerHTML = '<p class="empty-state">No transactions yet.</p>';
+      listEl.innerHTML = '<p class="empty-state">Belum ada transaksi.</p>';
       return;
     }
 
@@ -527,7 +527,7 @@
           '<span class="transaction-amount">' + formatAmount(tx.amount) + '</span>' +
           '<span class="badge">' + safeCategory + '</span>' +
           '<button class="btn-delete" data-id="' + safeId + '" ' +
-            'aria-label="Delete transaction: ' + safeName + '">Delete</button>' +
+            'aria-label="Hapus transaksi: ' + safeName + '">Hapus</button>' +
         '</li>'
       );
     });
@@ -603,9 +603,9 @@
     if (fallback) {
       fallback.style.display = "";          // restore CSS default (block / flex)
       fallback.innerHTML =
-        '<p class="chart-fallback-banner">Chart unavailable \u2014 showing text summary</p>' +
+        '<p class="chart-fallback-banner">Grafik tidak tersedia \u2014 menampilkan ringkasan teks</p>' +
         '<table class="chart-fallback-table"><thead><tr>' +
-          '<th>Category</th><th>Total</th>' +
+          '<th>Kategori</th><th>Total</th>' +
         '</tr></thead><tbody></tbody></table>';
     }
   }
@@ -639,7 +639,7 @@
       placeholder = document.createElement("p");
       placeholder.id        = "chart-placeholder-text";
       placeholder.className = "chart-placeholder";
-      placeholder.textContent = "No spending data yet.";
+      placeholder.textContent = "Belum ada data pengeluaran.";
       if (canvas && canvas.parentNode) {
         canvas.parentNode.insertBefore(placeholder, canvas.nextSibling);
       }
@@ -661,7 +661,7 @@
     if (!tbody) return;
 
     if (categoryTotals.size === 0) {
-      tbody.innerHTML = '<tr><td colspan="2">No spending data yet.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="2">Belum ada data pengeluaran.</td></tr>';
       return;
     }
 
@@ -718,7 +718,7 @@
               callbacks: {
                 label: function (context) {
                   var value = Number(context.parsed).toFixed(1);
-                  return (context.label || "Unknown") + ": " + value + "%";
+                  return (context.label || "Tidak Diketahui") + ": " + value + "%";
                 }
               }
             }
@@ -843,7 +843,7 @@
     } catch (err) {
       // Storage failure — show app-level banner (Req 1.7)
       if (typeof showAppError === "function") {
-        showAppError("Could not save transaction: " + (err.message || err));
+        showAppError("Tidak dapat menyimpan transaksi: " + (err.message || err));
       }
       return;
     }
@@ -881,7 +881,7 @@
    */
   function handleDeleteClick(id) {
     // Step 1 — confirm with the user before doing anything destructive (Req 3.2, 3.4)
-    var confirmed = window.confirm("Are you sure you want to delete this transaction?");
+    var confirmed = window.confirm("Apakah Anda yakin ingin menghapus transaksi ini?");
     if (!confirmed) return;
 
     // Step 2 — snapshot current state so we can roll back on storage failure (Req 3.5)
@@ -893,7 +893,7 @@
     } catch (err) {
       // Step 4 — storage threw; restore state and surface the error (Req 3.5, 3.6)
       AppState.transactions = savedState;
-      showAppError("Could not delete transaction. Your data has not been changed.");
+      showAppError("Tidak dapat menghapus transaksi. Data Anda tidak berubah.");
       renderAll();
       return;
     }
@@ -943,7 +943,7 @@
     try {
       Storage.saveBudgetLimit();
     } catch (err) {
-      showAppError("Could not save budget limit. Please try again.");
+      showAppError("Tidak dapat menyimpan batas anggaran. Silakan coba lagi.");
       AppState.budgetLimit = previousLimit;
       return;
     }
@@ -1066,7 +1066,7 @@
       var year  = d.getFullYear();
       var month = String(d.getMonth() + 1).padStart(2, "0");
       var value = year + "-" + month;
-      var label = d.toLocaleString("default", { month: "long" }) + " " + year;
+      var label = d.toLocaleString("id-ID", { month: "long" }) + " " + year;
 
       var option = document.createElement("option");
       option.value       = value;
