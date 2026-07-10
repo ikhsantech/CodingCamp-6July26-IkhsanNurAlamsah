@@ -44,8 +44,8 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Test `generateId` returns a non-empty string and two successive calls differ
     - _Requirements: 4.1_
 
-- [ ] 3. Implement the Storage module
-  - [ ] 3.1 Write the `Storage` module (section 3 of IIFE)
+- [x] 3. Implement the Storage module
+  - [x] 3.1 Write the `Storage` module (section 3 of IIFE)
     - `Storage.saveTransactions()` — serialises `AppState.transactions` to JSON; wraps `localStorage.setItem` in try/catch; throws on failure
     - `Storage.saveBudgetLimit()` — serialises `AppState.budgetLimit`; wraps `localStorage.setItem` in try/catch; throws on failure
     - `Storage.load()` — reads and parses `ebv_transactions` (defaults to `[]` on missing/corrupt); reads `ebv_budget_limit` (defaults to `null` on missing/invalid); assigns parsed values to `AppState`; shows error banner on corrupt JSON
@@ -62,8 +62,8 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Mock `localStorage.getItem` returning invalid JSON; assert `Storage.load()` sets `AppState.transactions = []`
     - _Requirements: 6.5, 1.7_
 
-- [ ] 4. Implement Validation and Business Logic
-  - [ ] 4.1 Write `validateForm()` and `validateBudgetInput()` functions (section 4 of IIFE)
+- [x] 4. Implement Validation and Business Logic
+  - [x] 4.1 Write `validateForm()` and `validateBudgetInput()` functions (section 4 of IIFE)
     - `validateForm(name, amount, category)` — returns array of error strings; checks name non-empty and ≤ 100 chars; checks amount is a number, > 0, ≤ 999999999.99; checks category is one of the allowed values
     - `validateBudgetInput(value)` — returns error string or null; checks value is numeric, > 0, ≤ 999999999.99
     - _Requirements: 1.3, 1.4, 1.5, 9.5_
@@ -80,7 +80,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with invalid budget values (same classes as Property 2); assert `validateBudgetInput` always returns a non-null error string
     - Tag: `// Feature: expense-budget-visualizer, Property 16: invalid budget limit rejected`
 
-  - [ ] 4.4 Write `buildTransaction()` and `addTransaction()` business logic (section 5 of IIFE)
+  - [x] 4.4 Write `buildTransaction()` and `addTransaction()` business logic (section 5 of IIFE)
     - `buildTransaction(name, amount, category)` — returns a Transaction object: `{ id: generateId(), name, amount: Math.round(amount * 100) / 100, category, timestamp: new Date().toISOString(), insertionIndex: AppState._nextIndex++ }`
     - `addTransaction(tx)` — pushes tx to `AppState.transactions` (tentative); calls `Storage.saveTransactions()`; on throw: pops the tx back off and re-throws
     - `deleteTransaction(id)` — saves prior state, filters out the transaction, calls `Storage.saveTransactions()`; on throw: restores prior state and re-throws
@@ -98,11 +98,11 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Test `deleteTransaction` restores prior state when `Storage.saveTransactions` throws
     - _Requirements: 1.2, 1.7, 3.5_
 
-- [ ] 5. Checkpoint — core state, storage, and validation ready
+- [x] 5. Checkpoint — core state, storage, and validation ready
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 6. Implement the Render Pipeline
-  - [ ] 6.1 Write `computeBalance()`, `computeCategoryTotals()`, and `getSortedTransactions()` (section 5 of IIFE)
+- [x] 6. Implement the Render Pipeline
+  - [x] 6.1 Write `computeBalance()`, `computeCategoryTotals()`, and `getSortedTransactions()` (section 5 of IIFE)
     - `computeBalance()` — reduces `AppState.transactions` amounts; returns Number rounded to 2dp
     - `computeCategoryTotals()` — returns a `Map<category, sum>` from `AppState.transactions`
     - `getSortedTransactions()` — returns a sorted copy of `AppState.transactions` per `AppState.sortOrder`; tie-breaks equal amounts by `insertionIndex` ascending
@@ -126,7 +126,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with pairs of transactions sharing the same amount but different `insertionIndex` values; assert the lower `insertionIndex` always comes first in amount sorts
     - Tag: `// Feature: expense-budget-visualizer, Property 14: equal-amount tie-breaker`
 
-  - [ ] 6.5 Write `renderBalance()` (section 6 of IIFE)
+  - [x] 6.5 Write `renderBalance()` (section 6 of IIFE)
     - Reads `computeBalance()`; updates `#display-balance` text to formatted value
     - Adds/removes `.balance--warning` class based on `AppState.budgetLimit !== null && balance > AppState.budgetLimit`
     - _Requirements: 4.1, 4.4, 9.2, 9.3, 9.4_
@@ -137,7 +137,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with valid balance and limit values; call `renderBalance()` after setting AppState; assert `.balance--warning` presence matches `balance > limit`
     - Tag: `// Feature: expense-budget-visualizer, Property 15: budget warning state`
 
-  - [ ] 6.7 Write `renderTransactionList()` (section 6 of IIFE)
+  - [x] 6.7 Write `renderTransactionList()` (section 6 of IIFE)
     - Calls `getSortedTransactions()` to get the display list
     - If empty, renders the "No transactions yet." empty-state message in `#transaction-list`
     - Otherwise, sets `#transaction-list innerHTML` to a `<ul>` of `<li>` elements each containing: item name, formatted amount, category badge, delete `<button data-id="...">` with accessible label
@@ -155,7 +155,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with an existing list and a new transaction; set `AppState.sortOrder = "insertion"`, call `renderTransactionList()`; assert the first `<li>` contains the new transaction's name
     - Tag: `// Feature: expense-budget-visualizer, Property 6: new tx at top`
 
-  - [ ] 6.10 Write `renderMonthlySummary()` (section 6 of IIFE)
+  - [x] 6.10 Write `renderMonthlySummary()` (section 6 of IIFE)
     - Filters `AppState.transactions` to those whose `timestamp` `YYYY-MM` prefix matches `AppState.selectedMonth`
     - Sorts filtered list by timestamp descending
     - Renders `#monthly-list` with the filtered transactions or the "No transactions for this period." empty state message
@@ -168,15 +168,15 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with arrays of transactions at varied timestamps and an arbitrary target month; call `renderMonthlySummary()`; assert the rendered list count and total match the expected filtered+summed result
     - Tag: `// Feature: expense-budget-visualizer, Property 11: monthly filtering exact`
 
-  - [ ] 6.12 Write `renderAll()` (section 6 of IIFE)
+  - [x] 6.12 Write `renderAll()` (section 6 of IIFE)
     - Calls `renderBalance()`, `renderTransactionList()`, `renderMonthlySummary()`, and `updateChart()` in sequence
     - _Requirements: 4.2, 4.3, 5.3, 5.4_
 
-- [ ] 7. Checkpoint — full render pipeline complete
+- [x] 7. Checkpoint — full render pipeline complete
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 8. Implement the Chart Module
-  - [ ] 8.1 Write `ChartModule` IIFE (section 7 of `app.js`)
+- [x] 8. Implement the Chart Module
+  - [x] 8.1 Write `ChartModule` IIFE (section 7 of `app.js`)
     - `ChartModule.init(canvasId)` — checks `window.Chart`; if absent sets `chartAvailable = false` and calls `showChartFallback()`; if present creates the Chart.js pie instance with empty data, legend at bottom, and tooltip callback showing `"Category: XX.X%"`
     - `ChartModule.update(categoryTotals)` — if not available calls `updateTextFallback(categoryTotals)`; if `categoryTotals.size === 0` calls `showChartPlaceholder()`; otherwise computes percentages, sets `chartInstance.data.labels` and `chartInstance.data.datasets[0].data`, calls `chartInstance.update("none")`
     - `showChartFallback()` — hides `#chart-canvas`, shows `#chart-fallback` with banner text "Chart unavailable — showing text summary" and an empty `<table>`
@@ -195,8 +195,8 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Assert `ChartModule.update` calls `updateTextFallback` when CDN is absent
     - _Requirements: 10.5_
 
-- [ ] 9. Implement Event Handlers
-  - [ ] 9.1 Write `handleFormSubmit(event)` (section 8 of IIFE)
+- [x] 9. Implement Event Handlers
+  - [x] 9.1 Write `handleFormSubmit(event)` (section 8 of IIFE)
     - `e.preventDefault()`
     - Read values from `#input-name`, `#input-amount`, `#select-category`
     - Call `validateForm()`; if errors, render error messages in `#form-error` and return
@@ -218,7 +218,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with valid input; simulate form submit; assert `#input-name.value === ""`, `#input-amount.value === ""`, `#select-category.value === ""`
     - Tag: `// Feature: expense-budget-visualizer, Property 3: form resets after submission`
 
-  - [ ] 9.4 Write `handleDeleteClick(id)` (section 8 of IIFE)
+  - [x] 9.4 Write `handleDeleteClick(id)` (section 8 of IIFE)
     - Call `window.confirm()` with a confirmation message; return early if cancelled
     - Save current transactions to `savedState`
     - Call `deleteTransaction(id)`
@@ -238,7 +238,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with a non-empty transactions array; mock `window.confirm` to return false; simulate delete; assert `AppState.transactions` and localStorage are unchanged
     - Tag: `// Feature: expense-budget-visualizer, Property 8: cancel delete is no-op`
 
-  - [ ] 9.7 Write `handleBudgetChange(value)` (section 8 of IIFE)
+  - [x] 9.7 Write `handleBudgetChange(value)` (section 8 of IIFE)
     - Call `validateBudgetInput(value)`; if error, show in `#budget-error` and return
     - Clear `#budget-error`
     - Set `AppState.budgetLimit = Math.round(parseFloat(value) * 100) / 100`
@@ -252,21 +252,21 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Use `fast-check` with valid limit values; call `handleBudgetChange(limit)`; assert `localStorage.getItem("ebv_budget_limit")` equals the limit; call `Storage.load()`; assert `AppState.budgetLimit` equals the original limit
     - Tag: `// Feature: expense-budget-visualizer, Property 17: budget limit round-trip`
 
-  - [ ] 9.9 Write `handleSortChange()` and `handleMonthChange()` (section 8 of IIFE)
+  - [x] 9.9 Write `handleSortChange()` and `handleMonthChange()` (section 8 of IIFE)
     - `handleSortChange()` — reads `#select-sort` value, sets `AppState.sortOrder`, calls `renderTransactionList()`
     - `handleMonthChange()` — reads `#select-month` value, sets `AppState.selectedMonth`, calls `renderMonthlySummary()`
     - _Requirements: 8.2, 8.3, 7.3_
 
-  - [ ] 9.10 Write `showAppError(msg)` and `showFormError(msg)` utility functions
+  - [x] 9.10 Write `showAppError(msg)` and `showFormError(msg)` utility functions
     - `showAppError(msg)` — sets text of `#app-error-banner`, adds `.visible` class, starts an 8-second `setTimeout` to remove `.visible`
     - `showFormError(msg)` — sets text of `#form-error`
     - _Requirements: 1.7, 3.5, 6.5_
 
-- [ ] 10. Checkpoint — all handlers wired and rendering end-to-end
+- [x] 10. Checkpoint — all handlers wired and rendering end-to-end
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Implement the Init function and wire everything together
-  - [ ] 11.1 Write `populateMonthSelector()` and `init()` (section 9 of IIFE)
+- [x] 11. Implement the Init function and wire everything together
+  - [x] 11.1 Write `populateMonthSelector()` and `init()` (section 9 of IIFE)
     - `populateMonthSelector()` — generates 13 `<option>` elements for the current month and the 12 prior months; each option has value `"YYYY-MM"` and label `"Month YYYY"`; appends to `#select-month`
     - `init()` — calls `Storage.load()`, sets `AppState.selectedMonth = currentYearMonth()`, calls `populateMonthSelector()`, sets `#select-month` value to `AppState.selectedMonth`, calls `ChartModule.init("chart-canvas")`, calls `renderAll()`
     - Add `document.addEventListener("DOMContentLoaded", init)` as the last line of the IIFE
@@ -278,7 +278,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Test `init()` loads from storage and calls `renderAll()` (use spies)
     - _Requirements: 7.1, 7.2, 6.3_
 
-  - [ ] 11.3 Attach all event listeners inside `init()`
+  - [x] 11.3 Attach all event listeners inside `init()`
     - `document.getElementById("form-add").addEventListener("submit", handleFormSubmit)`
     - `document.getElementById("select-sort").addEventListener("change", handleSortChange)`
     - `document.getElementById("select-month").addEventListener("change", handleMonthChange)`
@@ -293,7 +293,7 @@ Build a pure HTML + CSS + Vanilla JavaScript single-page app from scratch. The a
     - Assert `#transaction-list` container CSS includes `overflow: auto` or `overflow: scroll`
     - _Requirements: 5.6, 10.1, 10.2_
 
-- [ ] 12. Final checkpoint — full app integrated and all tests pass
+- [x] 12. Final checkpoint — full app integrated and all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 ---
